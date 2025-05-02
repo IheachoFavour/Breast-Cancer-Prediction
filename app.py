@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import joblib
+import pickle
 import json
 import numpy as np
 import os
@@ -19,24 +19,18 @@ class Prediction(db.Model):
     features = db.Column(db.String(200), nullable=False)
     result = db.Column(db.String(50), nullable=False)
 
-# Load the model
-model = joblib.load('logistic_regression_model.joblib')
+# Define the model path
+model_path = 'logistic_regression_model.pkl'
+
+# Load the model (you can move this inside __main__ if you prefer delayed loading)
+with open(model_path, 'rb') as f:
+    model = pickle.load(f)
 
 @app.route('/list_files', methods=['GET'])
 def list_files():
     # List all files and directories in the current directory
     files = os.listdir(os.getcwd())
     return jsonify({'files': files})
-
-# Check file existence and size
-if not os.path.exists(model_path):
-    raise FileNotFoundError(f"Model file not found at {model_path}")
-else:
-    print(f"Model file found at {model_path}, size: {os.path.getsize(model_path)} bytes")
-
-with open(model_path, 'rb') as f:
-    head = f.read(100)
-    print(f"First 100 bytes of model file:\n{head}")
 
 @app.route('/')
 def home():
@@ -73,9 +67,17 @@ def predict():
     # Return JSON response
     return jsonify({'prediction': result})
 
-
 if __name__ == '__main__':
-    # Ensure db.create_all is called within app context
+    # Check model file existence and inspect contents
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found at {model_path}")
+    else:
+        print(f"Model file found at {model_path}, size: {os.path.getsize(model_path)} bytes")
+        with open(model_path, 'rb') as f:
+            head = f.read(100)
+            print(f"First 100 bytes of model file:\n{head}")
+
+    # Initialize database and run app
     with app.app_context():
         db.create_all()
     port = int(os.environ.get('PORT', 5000))
