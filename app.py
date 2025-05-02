@@ -22,6 +22,22 @@ class Prediction(db.Model):
 # Load the model
 model = joblib.load('logistic_regression_model.joblib')
 
+@app.route('/list_files', methods=['GET'])
+def list_files():
+    # List all files and directories in the current directory
+    files = os.listdir(os.getcwd())
+    return jsonify({'files': files})
+
+# Check file existence and size
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model file not found at {model_path}")
+else:
+    print(f"Model file found at {model_path}, size: {os.path.getsize(model_path)} bytes")
+
+with open(model_path, 'rb') as f:
+    head = f.read(100)
+    print(f"First 100 bytes of model file:\n{head}")
+
 @app.route('/')
 def home():
     return render_template('index.html')
