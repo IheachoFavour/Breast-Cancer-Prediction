@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breast Cancer Prediction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .input-field {
+      transition: all 0.3s ease;
+      border: 2px solid #d1d5db;
+      background: #ffffff;
+    }
+    .input-field:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+    }
+    .submit-btn {
+      background: linear-gradient(to right, #8b5cf6, #ec4899);
+      transition: all 0.3s ease;
+    }
+    .submit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+    }
+    .result-box {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(20px);
+    }
+    .result-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-4xl w-full card rounded-3xl p-8">
+    <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Breast Cancer Prediction</h1>
+    <form id="prediction-form" method="POST" action="/predict" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Patient Name (Full Width) -->
+      <div class="col-span-1 md:col-span-2">
+        <label for="patient_name" class="block text-sm font-semibold text-gray-700 mb-2">Patient Name</label>
+        <input
+          type="text"
+          id="patient_name"
+          name="patient_name"
+          class="input-field w-full p-3 rounded-xl focus:outline-none"
+          required
+        />
+      </div>
+      <!-- Feature Inputs (Two Columns) -->
+      <div class="space-y-4">
+        <div>
+          <label for="feature1" class="block text-sm font-semibold text-gray-700T<canvas> text-anchor="middle" x="100" y="100" font-family="Arial" font-size="24" fill="black">Worst Texture</label>
+          <input
+            type="number"
+            id="feature1"
+            name="feature1"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature2" class="block text-sm font-semibold text-gray-700 mb-2">Worst Concave Points</label>
+          <input
+            type="number"
+            id="feature2"
+            name="feature2"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature3" class="block text-sm font-semibold text-gray-700 mb-2">Worst Radius</label>
+          <input
+            type="number"
+            id="feature3"
+            name="feature3"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature4" class="block text-sm font-semibold text-gray-700 mb-2">Worst Area</label>
+          <input
+            type="number"
+            id="feature4"
+            name="feature4"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature5" class="block text-sm font-semibold text-gray-700 mb-2">Mean Concave Points</label>
+          <input
+            type="number"
+            id="feature5"
+            name="feature5"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label for="feature6" class="block text-sm font-semibold text-gray-700 mb-2">Worst Perimeter</label>
+          <input
+            type="number"
+            id="feature6"
+            name="feature6"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature7" class="block text-sm font-semibold text-gray-700 mb-2">Worst Smoothness</label>
+          <input
+            type="number"
+            id="feature7"
+            name="feature7"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature8" class="block text-sm font-semibold text-gray-700 mb-2">Mean Concavity</label>
+          <input
+            type="number"
+            id="feature8"
+            name="feature8"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature9" class="block text-sm font-semibold text-gray-700 mb-2">Radius Error</label>
+          <input
+            type="number"
+            id="feature9"
+            name="feature9"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label for="feature10" class="block text-sm font-semibold text-gray-700 mb-2">Fractal Dimension Error</label>
+          <input
+            type="number"
+            id="feature10"
+            name="feature10"
+            step="any"
+            class="input-field w-full p-3 rounded-xl focus:outline-none"
+            required
+          />
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="submit-btn col-span-1 md:col-span-2 mt-6 p-4 text-white font-semibold rounded-xl focus:outline-none"
+      >
+        Predict
+      </button>
+    </form>
+    <div id="result" class="result-box mt-8 text-center text-xl font-bold text-gray-900 opacity-0"></div>
+  </div>
+
+  <script>
+    // Handle form submission
+    document.getElementById("prediction-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      for (let [key, value] of formData.entries()) {
+        data[key] = key === "patient_name" ? value : parseFloat(value);
+      }
+
+      try {
+        const response = await fetch("/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        
+
+        const result = await response.json();
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerText = result.prediction
+          ? `Prediction for ${data.patient_name}: ${result.prediction}`
+          : `Error: ${result.error}`;
+        resultDiv.classList.add("visible");
+      } catch (error) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerText = `Error: Failed to fetch prediction`;
+        resultDiv.classList.add("visible");
+      }
+    });
+  </script>
+</body>
+</html>
